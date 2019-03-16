@@ -24,7 +24,13 @@
         <a-plane position="0 0 0" rotation="-90 0 0" width="4" height="4" color="grey">
         </a-plane>
         <a-sky color="#ECECEC"></a-sky>
-        <a-entity id="rig" position="-3 3 4" rotation="-4 -40 0">
+        <a-assets>
+            <a-asset-item id="cityModel" src="./LivHack/looks/afryeas/didactic_sofa/scene.gltf">
+            </a-asset-item>
+        </a-assets>
+        <a-entity gltf-model="#cityModel" modify-materials></a-entity>
+
+        <a-entity id="rig" position="-3 3 4" rotation="-4 -40 0" fov="70">
             <a-entity id="camera" camera look-controls wasd-controls></a-entity>
             <!-- <a-camera position="-2 6 4"></a-camera> -->
         </a-entity>
