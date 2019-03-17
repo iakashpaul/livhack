@@ -42,7 +42,7 @@
         <a class="active" href="#home">Team: YourOrderIsHere</a>
         <a href="">LivHack</a>
     </div>
-    <div>
+    <div style="padding-left: 50px;">
         <h2>Upload your design inspiration for generating the color pallete <input type="file" name="image" id="image"
                 accept="image/*" />
         </h2>
@@ -63,15 +63,15 @@
         <!-- <a-box position="-1 0.5 1" rotation="0 45 0" color="#4CC3D9"></a-box> -->
         <!-- <a-sphere position="0 1.25 -1" radius="1.25" color="#EF2D5E"></a-sphere> -->
         <!-- <a-cylinder position="1 0.75 -1" radius="0.5" height="1.5" color="#FFC65D"></a-cylinder> -->
-        <a-plane position="2 2 0" rotation="0 -90 0" width="4" height="4" color="#F5F5DC">
+        <a-plane id="p1" position="2 2 0" rotation="0 -90 0" width="4" height="4" color="#F5F5DC">
         </a-plane>
-        <a-plane position="0 2 -2" rotation="0 0 0" width="4" height="4" color="#F5F5DC">
+        <a-plane id="p2" position="0 2 -2" rotation="0 0 0" width="4" height="4" color="#F5F5DC">
         </a-plane>
-        <a-plane position="-2 2 0" rotation="0 90 0" width="4" height="4" color="#F5F5DC">
+        <a-plane id="p3" position="-2 2 0" rotation="0 90 0" width="4" height="4" color="#F5F5DC">
         </a-plane>
-        <a-plane position="0 2 2" rotation="0 180 0" width="4" height="4" color="#F5F5DC">
+        <a-plane id="p4" position="0 2 2" rotation="0 180 0" width="4" height="4" color="#F5F5DC">
         </a-plane>
-        <a-plane position="0 0 0" rotation="-90 0 0" width="4" height="4" color="silver">
+        <a-plane id="p5" position="0 0 0" rotation="-90 0 0" width="4" height="4" color="silver">
         </a-plane>
         <a-sky color="#ECECEC"></a-sky>
         <!-- Look specific stuff -->
@@ -92,6 +92,13 @@
         </a-assets>
         <a-entity gltf-model="#table" modify-materials-table position="-0.56 0 0.65" rotate="0 -90 0"
             scale="0.2 0.2 0.2">
+        </a-entity>
+
+        <a-assets>
+            <a-asset-item id="cajon" src="./LivHack/looks/coral/cajon_-_drawer/scene.gltf">
+            </a-asset-item>
+        </a-assets>
+        <a-entity gltf-model="#cajon" modify-materials-cajon position="1 1 0.65" rotate="0 -90 90" scale="1 1 1">
         </a-entity>
 
         <!-- Camera viewport -->
@@ -127,8 +134,8 @@
                 canvas.style.left = "200px";
                 canvas.style.top = "100px";
                 canvas.style.border = "1px #fa0 solid";
-                canvas.width = 200;
-                canvas.height = 200;
+                canvas.width = 250;
+                canvas.height = 250;
                 document.body.appendChild(canvas);
                 var ctx = canvas.getContext("2d");
                 ctx.drawImage(this, 0, 0, canvas.width, canvas.height);
@@ -151,72 +158,101 @@
                 div5.style.backgroundColor = 'rgb(' + palette.Muted.getRgb().join(',') + ')';
                 var div6 = document.getElementById('Vibrant');
                 div6.style.backgroundColor = 'rgb(' + palette.Vibrant.getRgb().join(',') + ')';
+                $ = (queryString) => document.getElementById(queryString);
+                let color = 'rgb(' + palette.DarkMuted.getRgb().join(',') + ')';
+                $('p1').setAttribute('color', color)
+                let color2 = 'rgb(' + palette.LightMuted.getRgb().join(',') + ')';
+                $('p2').setAttribute('color', color2)
+                let color3 = 'rgb(' + palette.Muted.getRgb().join(',') + ')';
+                $('p3').setAttribute('color', color3)
+                let color4 = 'rgb(' + palette.DarkVibrant.getRgb().join(',') + ')';
+                $('p5').setAttribute('color', color4)
+                color()
             })
 
 
         })
     }
-//     var tex = new THREE.TextureLoader().load('diffuse.png');
-// tex.flipY = false; // for glTF models.
+    //     var tex = new THREE.TextureLoader().load('diffuse.png');
+    // tex.flipY = false; // for glTF models.
 
-// el.addEventListener('model-loaded', function (e {
-//   e.detail.model.traverse(function(node) {
-//     if (node.isMesh) node.material.map = tex;
-//   });
-// });
-</script>
-<script>
-    // AFRAME.registerComponent('modify-materials-sofa', {
-    //     init: function () {
-    //         // Wait for model to load.
-    //         this.el.addEventListener('model-loaded', () => {
-    //             // Grab the mesh / scene.
-    //             const obj = this.el.getObject3D('mesh');
-    //             // console.log(obj)
-    //             // Go over the submeshes and modify materials we want.
-    //             obj.traverse(node => {
-    //                 // console.log(node)
-    //                 if (node.material != null && node.name.indexOf("rug") == -1) {
-    //                     node.material.color.set('blue');
-    //                 }
-    //             });
-    //         });
-    //     }
+    // el.addEventListener('model-loaded', function (e {
+    //   e.detail.model.traverse(function(node) {
+    //     if (node.isMesh) node.material.map = tex;
+    //   });
     // });
-    AFRAME.registerComponent('modify-materials-rug', {
-        init: function () {
-            // Wait for model to load.
-            this.el.addEventListener('model-loaded', () => {
-                // Grab the mesh / scene.
-                const obj = this.el.getObject3D('mesh');
-                // console.log(obj)
-                // Go over the submeshes and modify materials we want.
-                obj.traverse(node => {
-                    // console.log(node)
-                    if (node.material != null) {
-                        node.material.color.set('white');
-                    }
+
+    function color() {
+
+        AFRAME.registerComponent('modify-materials-sofa', {
+            init: function () {
+                // Wait for model to load.
+                this.el.addEventListener('model-loaded', () => {
+                    // Grab the mesh / scene.
+                    const obj = this.el.getObject3D('mesh');
+                    // console.log(obj)
+                    // Go over the submeshes and modify materials we want.
+                    obj.traverse(node => {
+                        // console.log(node)
+                        if (node.material != null && node.name.indexOf("rug") == -1) {
+                            node.material.color.set('blue');
+                        }
+                    });
                 });
-            });
-        }
-    });
-    AFRAME.registerComponent('modify-materials-table', {
-        init: function () {
-            // Wait for model to load.
-            this.el.addEventListener('model-loaded', () => {
-                // Grab the mesh / scene.
-                const obj = this.el.getObject3D('mesh');
-                // console.log(obj)
-                // Go over the submeshes and modify materials we want.
-                obj.traverse(node => {
-                    // console.log(node)
-                    if (node.material != null) {
-                        node.material.color.set('green');
-                    }
+            }
+        });
+        AFRAME.registerComponent('modify-materials-rug', {
+            init: function () {
+                // Wait for model to load.
+                this.el.addEventListener('model-loaded', () => {
+                    // Grab the mesh / scene.
+                    const obj = this.el.getObject3D('mesh');
+                    // console.log(obj)
+                    // Go over the submeshes and modify materials we want.
+                    obj.traverse(node => {
+                        // console.log(node)
+                        if (node.material != null) {
+                            node.material.color.set('white');
+                        }
+                    });
                 });
-            });
-        }
-    });
+            }
+        });
+        AFRAME.registerComponent('modify-materials-table', {
+            init: function () {
+                // Wait for model to load.
+                this.el.addEventListener('model-loaded', () => {
+                    // Grab the mesh / scene.
+                    const obj = this.el.getObject3D('mesh');
+                    // console.log(obj)
+                    // Go over the submeshes and modify materials we want.
+                    obj.traverse(node => {
+                        // console.log(node)
+                        if (node.material != null) {
+                            node.material.color.set('green');
+                        }
+                    });
+                });
+            }
+        });
+        AFRAME.registerComponent('modify-materials-cajon', {
+            init: function () {
+                // Wait for model to load.
+                this.el.addEventListener('model-loaded', () => {
+                    // Grab the mesh / scene.
+                    const obj = this.el.getObject3D('mesh');
+                    // console.log(obj)
+                    // Go over the submeshes and modify materials we want.
+                    obj.traverse(node => {
+                        // console.log(node)
+                        if (node.material != null) {
+                            node.material.color.set('yellow');
+                        }
+                    });
+                });
+            }
+        });
+    }
 </script>
 
 </html>
