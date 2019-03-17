@@ -5,33 +5,101 @@
     <script src="https://aframe.io/releases/0.9.0/aframe.min.js"></script>
 
     <script src="vibrant.3.0.0-alpha.2/vibrant.js"></script>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        .topnav {
+            overflow: hidden;
+            background-color: #333;
+        }
+
+        .topnav a {
+            float: left;
+            color: #f2f2f2;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+            font-size: 17px;
+        }
+
+        .topnav a:hover {
+            background-color: #ddd;
+            color: black;
+        }
+
+        .topnav a.active {
+            background-color: rgb(203, 4, 65);
+            color: white;
+        }
+    </style>
 </head>
 
 <body>
-    <a-scene>
-        <!-- <a-entity camera look-controls position="0 1.6 0" rotation="-34 45 0"></a-entity> -->
-        <a-box position="-1 0.5 1" rotation="0 45 0" color="#4CC3D9"></a-box>
-        <a-sphere position="0 1.25 -1" radius="1.25" color="#EF2D5E"></a-sphere>
-        <a-cylinder position="1 0.75 -1" radius="0.5" height="1.5" color="#FFC65D"></a-cylinder>
-        <a-plane position="2 2 0" rotation="0 -90 0" width="4" height="4" color="grey">
+    <div class="topnav">
+        <a class="active" href="#home">Team: YourOrderIsHere</a>
+        <a href="">LivHack</a>
+    </div>
+    <div>
+        <h2>Upload your design inspiration for generating the color pallete <input type="file" name="image" id="image"
+                accept="image/*" />
+        </h2>
+        DarkMuted<div id="DarkMuted" style="background: white;width: 20px; height: 20px;"></div>
+        DarkVibrant<div id="DarkVibrant" style="background: white;width: 20px; height: 20px;"></div>
+        LightMuted<div id="LightMuted" style="background: white;width: 20px; height: 20px;"></div>
+        LightVibrant<div id="LightVibrant" style="background: white;width: 20px; height: 20px;"></div>
+        Muted<div id="Muted" style="background: white;width: 20px; height: 20px;"></div>
+        Vibrant<div id="Vibrant" style="background: white;width: 20px; height: 20px;"></div>
+
+
+    </div>
+    <br>
+    <hr>
+    <a-scene embedded>
+        <!-- <a-entity camera look-controls position=" 0 1.6 0" rotation="-34 45 0">
+                </a-entity> -->
+        <!-- <a-box position="-1 0.5 1" rotation="0 45 0" color="#4CC3D9"></a-box> -->
+        <!-- <a-sphere position="0 1.25 -1" radius="1.25" color="#EF2D5E"></a-sphere> -->
+        <!-- <a-cylinder position="1 0.75 -1" radius="0.5" height="1.5" color="#FFC65D"></a-cylinder> -->
+        <a-plane position="2 2 0" rotation="0 -90 0" width="4" height="4" color="#F5F5DC">
         </a-plane>
-        <a-plane position="0 2 -2" rotation="0 0 0" width="4" height="4" color="grey">
+        <a-plane position="0 2 -2" rotation="0 0 0" width="4" height="4" color="#F5F5DC">
         </a-plane>
-        <a-plane position="-2 2 0" rotation="0 90 0" width="4" height="4" color="grey">
+        <a-plane position="-2 2 0" rotation="0 90 0" width="4" height="4" color="#F5F5DC">
         </a-plane>
-        <a-plane position="0 2 2" rotation="0 180 0" width="4" height="4" color="grey">
+        <a-plane position="0 2 2" rotation="0 180 0" width="4" height="4" color="#F5F5DC">
         </a-plane>
-        <a-plane position="0 0 0" rotation="-90 0 0" width="4" height="4" color="grey">
+        <a-plane position="0 0 0" rotation="-90 0 0" width="4" height="4" color="silver">
         </a-plane>
         <a-sky color="#ECECEC"></a-sky>
+        <!-- Look specific stuff -->
         <a-assets>
-            <a-asset-item id="cityModel" src="./LivHack/looks/afryeas/didactic_sofa/scene.gltf">
+            <a-asset-item id="didactic_sofa" src="./LivHack/looks/afryeas/didactic_sofa/scene.gltf">
             </a-asset-item>
         </a-assets>
-        <a-entity gltf-model="#cityModel" modify-materials></a-entity>
+        <a-entity gltf-model="#didactic_sofa" modify-materials-sofa position="-1 0 -1.5"></a-entity>
+        <a-assets>
+            <a-asset-item id="persian_rug" src="./LivHack/looks/afryeas/persian_rug/scene.gltf">
+            </a-asset-item>
+        </a-assets>
+        <a-entity gltf-model="#persian_rug" modify-materials-rug position="-0.56 0 0.65" rotate="0 -90 0"
+            scale="0.005 0 0.005"></a-entity>
+        <a-assets>
+            <a-asset-item id="table" src="./LivHack/looks/afryeas/table/scene.gltf">
+            </a-asset-item>
+        </a-assets>
+        <a-entity gltf-model="#table" modify-materials-table position="-0.56 0 0.65" rotate="0 -90 0"
+            scale="0.2 0.2 0.2">
+        </a-entity>
 
+        <!-- Camera viewport -->
         <a-entity id="rig" position="-3 3 4" rotation="-4 -40 0" fov="70">
             <a-entity id="camera" camera look-controls wasd-controls></a-entity>
+            <a-entity rotation="0 0 0">
+                <a-entity position="5 0 0"></a-entity>
+            </a-entity>
             <!-- <a-camera position="-2 6 4"></a-camera> -->
         </a-entity>
 
@@ -45,9 +113,110 @@
     // // Promise
     // Vibrant.from('path/to/image').getPalette().then(function (palette) { });
     // // Or
-    var v = new Vibrant('55444.jpg');
-    // ... same as in node.js
-    v.getPalette((err, palette) => console.log(palette))
+    window.onload = function () {
+
+        // when the user selects an image
+        document.getElementById("image").addEventListener("change", function (e) {
+            var image = e.target.files[0]; // assumes single selection
+            var img = new Image();
+
+            // when it's loaded, we can perform any kind of processing we need on it
+            img.onload = function () {
+                var canvas = document.createElement("canvas");
+                canvas.style.position = "absolute";
+                canvas.style.left = "200px";
+                canvas.style.top = "100px";
+                canvas.style.border = "1px #fa0 solid";
+                canvas.width = 200;
+                canvas.height = 200;
+                document.body.appendChild(canvas);
+                var ctx = canvas.getContext("2d");
+                ctx.drawImage(this, 0, 0, canvas.width, canvas.height);
+            }
+            img.src = window.URL.createObjectURL(e.target.files[0]);
+            var v = new Vibrant(img.src);//('55444.jpg');
+            // ... same as in node.js
+            v.getPalette((err, palette) => {
+                console.log(palette)
+                console.log(palette.DarkMuted.getRgb())
+                var div1 = document.getElementById('DarkMuted');
+                div1.style.backgroundColor = 'rgb(' + palette.DarkMuted.getRgb().join(',') + ')';
+                var div2 = document.getElementById('DarkVibrant');
+                div2.style.backgroundColor = 'rgb(' + palette.DarkVibrant.getRgb().join(',') + ')';
+                var div3 = document.getElementById('LightMuted');
+                div3.style.backgroundColor = 'rgb(' + palette.LightMuted.getRgb().join(',') + ')';
+                var div4 = document.getElementById('LightVibrant');
+                div4.style.backgroundColor = 'rgb(' + palette.LightVibrant.getRgb().join(',') + ')';
+                var div5 = document.getElementById('Muted');
+                div5.style.backgroundColor = 'rgb(' + palette.Muted.getRgb().join(',') + ')';
+                var div6 = document.getElementById('Vibrant');
+                div6.style.backgroundColor = 'rgb(' + palette.Vibrant.getRgb().join(',') + ')';
+            })
+
+
+        })
+    }
+//     var tex = new THREE.TextureLoader().load('diffuse.png');
+// tex.flipY = false; // for glTF models.
+
+// el.addEventListener('model-loaded', function (e {
+//   e.detail.model.traverse(function(node) {
+//     if (node.isMesh) node.material.map = tex;
+//   });
+// });
+</script>
+<script>
+    // AFRAME.registerComponent('modify-materials-sofa', {
+    //     init: function () {
+    //         // Wait for model to load.
+    //         this.el.addEventListener('model-loaded', () => {
+    //             // Grab the mesh / scene.
+    //             const obj = this.el.getObject3D('mesh');
+    //             // console.log(obj)
+    //             // Go over the submeshes and modify materials we want.
+    //             obj.traverse(node => {
+    //                 // console.log(node)
+    //                 if (node.material != null && node.name.indexOf("rug") == -1) {
+    //                     node.material.color.set('blue');
+    //                 }
+    //             });
+    //         });
+    //     }
+    // });
+    AFRAME.registerComponent('modify-materials-rug', {
+        init: function () {
+            // Wait for model to load.
+            this.el.addEventListener('model-loaded', () => {
+                // Grab the mesh / scene.
+                const obj = this.el.getObject3D('mesh');
+                // console.log(obj)
+                // Go over the submeshes and modify materials we want.
+                obj.traverse(node => {
+                    // console.log(node)
+                    if (node.material != null) {
+                        node.material.color.set('white');
+                    }
+                });
+            });
+        }
+    });
+    AFRAME.registerComponent('modify-materials-table', {
+        init: function () {
+            // Wait for model to load.
+            this.el.addEventListener('model-loaded', () => {
+                // Grab the mesh / scene.
+                const obj = this.el.getObject3D('mesh');
+                // console.log(obj)
+                // Go over the submeshes and modify materials we want.
+                obj.traverse(node => {
+                    // console.log(node)
+                    if (node.material != null) {
+                        node.material.color.set('green');
+                    }
+                });
+            });
+        }
+    });
 </script>
 
 </html>
